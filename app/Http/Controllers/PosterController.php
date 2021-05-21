@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Components\ImportDataClient;
+use App\Models\Category;
 use App\Models\Poster;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,9 @@ class PosterController extends Controller
         foreach ($data as $item) {
             $item = (array)($item);
             $item['date'] = $item['date']->lower;
-            $poster = Poster::create($item);
+//            $poster = Poster::create($item);
+            dump($item['categories']->id);
+//            dump((array)$item['categories']);
         }
     }
 }

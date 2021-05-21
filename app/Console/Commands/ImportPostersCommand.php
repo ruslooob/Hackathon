@@ -6,7 +6,7 @@ use App\Components\ImportDataClient;
 use Illuminate\Console\Command;
 
 
-class ImportDataCommand extends Command
+class ImportPostersCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -40,7 +40,7 @@ class ImportDataCommand extends Command
     public function handle()
     {
         $import = new ImportDataClient();
-        $response = $import->client->request('GET', 'posters/160');
+        $response = $import->client->request('GET', 'posters');
         dd($response->getBody()->getContents());
     }
 }

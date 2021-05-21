@@ -11,6 +11,7 @@ class Category extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['id', 'title', 'image', 'description'];
     public function posters(): BelongsToMany
     {
         return $this->belongsToMany(Poster::class);
