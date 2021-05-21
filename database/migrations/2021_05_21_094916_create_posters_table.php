@@ -20,9 +20,9 @@ class CreatePostersTable extends Migration
             $table->integer('price')->nullable();
             $table->integer('site')->nullable();
             $table->string('date')->nullable();
-            $table->string('description');
+            $table->string('description')->default('');
             $table->string('address');
-            $table->string('phones');
+            $table->string('phones')->default('');
             $table->decimal('latitude', 10, 7)->nullable();
             $table->decimal('longitude', 10, 7)->nullable();
 
