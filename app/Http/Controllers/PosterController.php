@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Components\ImportDataClient;
 use App\Models\Category;
 use App\Models\Poster;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -49,16 +50,22 @@ class PosterController extends Controller
         }
     }
 
-    public function sortByDate(): Collection
+    public function sortByDate(): JsonResponse
     {
         $posters = DB::table('posters')->orderBy('date')->get();
-        return $posters;
+        return Response()->json($posters);
     }
 
-    public function sortByPrice(): Collection
+    public function sortByPrice(): JsonResponse
     {
         $posters = DB::table('posters')->orderBy('price')->get();
-        return $posters;
+        return Response()->json($posters);
+    }
+
+    public function showPoster($id) : JsonResponse
+    {
+        $poster = Poster::find($id);
+        return Response()->json($poster);
     }
 
 }
