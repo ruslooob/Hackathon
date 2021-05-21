@@ -23,11 +23,11 @@ class PosterController extends Controller
 
     public function sortByDate() {
         $posters = DB::table('posters')->orderBy('date')->get();
-        dd($posters);
+        return $posters;
     }
 
     public function sortByPrice() {
         $posters = DB::table('posters')->orderBy('price')->get();
-        dd($posters);
+        return $posters;
     }
 }
