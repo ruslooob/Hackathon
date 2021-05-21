@@ -23,14 +23,14 @@ class CreatePostersTable extends Migration
             $table->string('description');
             $table->string('address');
             $table->string('phones');
-            $table->string('latitude');
-            $table->string('longitude');
-            $table->foreign('category_id')->references('id')->on('categories');
-            $table->foreign('gallery_poster_id')->references('id')->on('gallery_posters');
+            $table->decimal('latitude', 10, 7);
+            $table->decimal('longitude', 10, 7);
+
+
+
             $table->integer('comments_quantity');
             $table->integer('likes_quantity');
-            $table->foreign('poster_recommendations_table')->references('id')->on('poster_recommendations');
-            $table->string('is_liked');
+            $table->boolean('is_liked');
             $table->timestamps();
         });
     }

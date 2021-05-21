@@ -17,6 +17,10 @@ class CreatePosterRecommendationsTable extends Migration
             $table->id();
             $table->string('image');
             $table->string('title');
+
+            $table->bigInteger('poster_id');
+            $table->foreign('poster_id')->references('id')->on('posters');
+
             $table->timestamps();
         });
     }
