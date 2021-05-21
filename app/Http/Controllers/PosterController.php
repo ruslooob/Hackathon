@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Components\ImportDataClient;
 use App\Models\Poster;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PosterController extends Controller
 {
@@ -18,5 +19,15 @@ class PosterController extends Controller
             $item['date'] = $item['date']->lower;
             $poster = Poster::create($item);
         }
+    }
+
+    public function sortByDate() {
+        $posters = DB::table('posters')->orderBy('date')->get();
+        dd($posters);
+    }
+
+    public function sortByPrice() {
+        $posters = DB::table('posters')->orderBy('price')->get();
+        dd($posters);
     }
 }
