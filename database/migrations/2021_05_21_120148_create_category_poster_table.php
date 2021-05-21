@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePosterRecommendationsTable extends Migration
+class CreateCategoryPosterTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreatePosterRecommendationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('poster_recommendations', function (Blueprint $table) {
+        Schema::create('category_poster', function (Blueprint $table) {
             $table->id();
-            $table->string('image')->nullable();
-            $table->string('title');
+
+            $table->bigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories');
 
             $table->bigInteger('poster_id');
             $table->foreign('poster_id')->references('id')->on('posters');
@@ -32,6 +33,6 @@ class CreatePosterRecommendationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('poster_recommendations');
+        Schema::dropIfExists('category_poster');
     }
 }

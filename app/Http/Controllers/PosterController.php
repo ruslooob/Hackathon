@@ -12,6 +12,11 @@ class PosterController extends Controller
         $import = new ImportDataClient();
         $response = $import->client->request('GET', 'posters');
         $data = json_decode($response->getBody()->getContents())->results;
-        Poster::createMany($data);
+
+        foreach ($data as $item) {
+            $item = (array)($item);
+            $item['date'] = $item['date']->lower;
+            $poster = Poster::create($item);
+        }
     }
 }

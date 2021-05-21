@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PosterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,4 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/create', [\App\Http\Controllers\PosterController::class, 'create']);
+Route::get('/create', [PosterController::class, 'create']);

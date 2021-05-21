@@ -15,7 +15,11 @@ class CreateGalleryPostersTable extends Migration
     {
         Schema::create('gallery_posters', function (Blueprint $table) {
             $table->id();
-            $table->string('image');
+            $table->string('image')->nullable();
+
+            $table->bigInteger('poster_id');
+            $table->foreign('poster_id')->references('id')->on('posters');
+
             $table->timestamps();
         });
     }

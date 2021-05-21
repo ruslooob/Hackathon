@@ -16,21 +16,21 @@ class CreatePostersTable extends Migration
         Schema::create('posters', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('image');
-            $table->integer('price');
-            $table->integer('site');
-            $table->string('date');
+            $table->string('image')->nullable();
+            $table->integer('price')->nullable();
+            $table->integer('site')->nullable();
+            $table->string('date')->nullable();
             $table->string('description');
             $table->string('address');
             $table->string('phones');
-            $table->string('latitude');
-            $table->string('longitude');
-            $table->foreign('category_id')->references('id')->on('categories');
-            $table->foreign('gallery_poster_id')->references('id')->on('gallery_posters');
+            $table->decimal('latitude', 10, 7)->nullable();
+            $table->decimal('longitude', 10, 7)->nullable();
+
+
+
             $table->integer('comments_quantity');
             $table->integer('likes_quantity');
-            $table->foreign('poster_recommendations_table')->references('id')->on('poster_recommendations');
-            $table->string('is_liked');
+            $table->boolean('is_liked')->nullable();
             $table->timestamps();
         });
     }
