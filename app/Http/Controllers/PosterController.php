@@ -81,4 +81,12 @@ class PosterController extends Controller
         $posters = json_decode($posters->getBody()->getContents());
         return Response()->json($posters);
     }
+
+    public function indexPoster()
+    {
+        $import = new ImportDataClient();
+        $posters = $import->client->request('GET', 'posters/');
+        $posters = json_decode($posters->getBody()->getContents());
+        return Response()->json($posters);
+    }
 }

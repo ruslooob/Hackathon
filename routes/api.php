@@ -27,4 +27,6 @@ Route::get('/sortPrice', [PosterController::class, 'sortByPrice']);
 
 Route::get('/posters-by-category/{id}', [PosterController::class, 'filterByCategories']);
 
+Route::get('/posters', [PosterController::class, 'indexPoster']);
+
 Route::get('/posters/{id}', [PosterController::class, 'showPoster']);
