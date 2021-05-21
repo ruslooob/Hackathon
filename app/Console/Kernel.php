@@ -27,8 +27,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('import:posters')->everyMinute();
-        $schedule->command('import:categories')->everyMinute();
+        $schedule->command('import:posters')->everyMinute()->timezone('Europe/Moscow');
+        $schedule->command('import:categories')->everyMinute()->timezone('Europe/Moscow');
     }
 
     /**
