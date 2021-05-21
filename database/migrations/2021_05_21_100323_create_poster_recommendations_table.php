@@ -18,7 +18,7 @@ class CreatePosterRecommendationsTable extends Migration
             $table->string('image')->nullable();
             $table->string('title');
 
-            $table->bigInteger('poster_id');
+            $table->unsignedBigInteger('poster_id');
             $table->foreign('poster_id')->references('id')->on('posters');
 
             $table->timestamps();

@@ -16,10 +16,10 @@ class CreateCategoryPosterTable extends Migration
         Schema::create('category_poster', function (Blueprint $table) {
             $table->id();
 
-            $table->bigInteger('category_id');
+            $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
 
-            $table->bigInteger('poster_id');
+            $table->unsignedBigInteger('poster_id');
             $table->foreign('poster_id')->references('id')->on('posters');
 
             $table->timestamps();
