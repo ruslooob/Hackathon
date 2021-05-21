@@ -6,8 +6,6 @@ use App\Components\ImportDataClient;
 use App\Models\Category;
 use App\Models\Poster;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class PosterController extends Controller
@@ -42,10 +40,6 @@ class PosterController extends Controller
                 DB::table('category_poster')->insert(
                     ['category_id' => $categoryId, 'poster_id' => $posterId],
                 );
-//                $poster = Poster::create($poster)->each(function($poster) use($posterId, $categoryId) {
-//                    $poster->pivot->poster_id = $posterId;
-//                    $poster->pivot->category_id = $categoryId;
-//                });
             }
         }
     }
@@ -62,10 +56,38 @@ class PosterController extends Controller
         return Response()->json($posters);
     }
 
-    public function showPoster($id) : JsonResponse
+    public function filterByCategories($id): JsonResponse
     {
-        $poster = Poster::find($id);
+//        $postersID = DB::table('category_poster')->where('category_id', $id)->get();
+//
+//        $posters = [];
+//        foreach ($postersID as $posterID) {
+//            array_push($posters, DB::table('posters')->find($posterID->poster_id));
+//        }
+        $import = new ImportDataClient();
+
+        $posters = $import->client->request('GET', 'posters-by-category/' . $id);
+        $posters = json_decode($posters->getBody()->getContents());
+        return Response()->json($posters);
+
+
+    }
+
+    public function showPoster($id): JsonResponse
+    {
+//        $poster = Poster::find($id);
+        $import = new ImportDataClient();
+        $poster = $import->client->request('GET', 'posters/' . $id);
+        $poster = json_decode($poster->getBody()->getContents());
         return Response()->json($poster);
+    }
+
+    public function indexPoster()
+    {
+        $import = new ImportDataClient();
+        $posters = $import->client->request('GET', 'posters/');
+        $posters = json_decode($posters->getBody()->getContents());
+        return Response()->json($posters);
     }
 
 }
