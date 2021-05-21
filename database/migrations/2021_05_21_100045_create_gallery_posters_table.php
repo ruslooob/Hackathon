@@ -17,7 +17,7 @@ class CreateGalleryPostersTable extends Migration
             $table->id();
             $table->string('image')->nullable();
 
-            $table->bigInteger('poster_id');
+            $table->unsignedBigInteger('poster_id');
             $table->foreign('poster_id')->references('id')->on('posters');
 
             $table->timestamps();

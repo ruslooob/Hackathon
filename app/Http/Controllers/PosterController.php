@@ -6,6 +6,7 @@ use App\Components\ImportDataClient;
 use App\Models\Category;
 use App\Models\Poster;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class PosterController extends Controller
@@ -47,4 +48,17 @@ class PosterController extends Controller
             }
         }
     }
+
+    public function sortByDate(): Collection
+    {
+        $posters = DB::table('posters')->orderBy('date')->get();
+        return $posters;
+    }
+
+    public function sortByPrice(): Collection
+    {
+        $posters = DB::table('posters')->orderBy('price')->get();
+        return $posters;
+    }
+
 }

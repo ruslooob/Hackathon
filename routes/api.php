@@ -20,3 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/create', [PosterController::class, 'create']);
+
+Route::get('/sortDate', [PosterController::class, 'sortByDate']);
+
+Route::get('/sortPrice', [PosterController::class, 'sortByPrice']);
