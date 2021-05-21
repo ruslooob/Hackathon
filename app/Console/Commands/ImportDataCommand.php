@@ -40,7 +40,7 @@ class ImportDataCommand extends Command
     public function handle()
     {
         $import = new ImportDataClient();
-        $response = $import->client->request('GET', 'posters/160');
-        dd($response->getBody()->getContents());
+        $response = $import->client->request('GET', 'posters');
+        dd((json_decode($response->getBody()->getContents()))->results);
     }
 }
