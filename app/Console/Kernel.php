@@ -15,7 +15,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        ImportPostersCommand::class,
+        ImportCategoriesCommand::class,
     ];
 
     /**
@@ -26,8 +27,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command(ImportPostersCommand::class)->everyMinute();
-        $schedule->command(ImportCategoriesCommand::class)->everyMinute();
+        $schedule->command('import:posters')->everyMinute();
+        $schedule->command('import:categories')->everyMinute();
     }
 
     /**
