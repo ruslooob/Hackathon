@@ -11,6 +11,7 @@ class Category extends Model
 {
     use HasFactory;
 
+    protected $table = 'categories';
     protected $fillable = ['id', 'title', 'image', 'description'];
     public function posters(): BelongsToMany
     {

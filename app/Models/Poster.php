@@ -12,6 +12,8 @@ class Poster extends Model
 {
     use HasFactory;
 
+    protected $table = 'posters';
+
     protected $fillable = ['id', 'title', 'image',
         'price', 'site', 'date', 'description',
         'address', 'phones', 'latitude',
