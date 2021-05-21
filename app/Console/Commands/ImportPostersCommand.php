@@ -6,21 +6,21 @@ use App\Components\ImportDataClient;
 use Illuminate\Console\Command;
 
 
-class ImportDataCommand extends Command
+class ImportPostersCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'import:data';
+    protected $signature = 'import:posters';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Get data from back-poster.admlr.lipetsk.ru';
+    protected $description = 'Get posters from back-poster.admlr.lipetsk.ru';
 
     /**
      * Create a new command instance.
