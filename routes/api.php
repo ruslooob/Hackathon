@@ -21,24 +21,38 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// user root
-Route::get('/user-create', function (Request $request) {
-    User::create([
-        'name' => 'Дмитрий',
-        'password' => Hash::make('password'),
-    ]);
-});
+//// user root
+//Route::get('/user-create', function (Request $request) {
+//    User::create([
+//        'name' => 'Дмитрий',
+//        'password' => Hash::make('password'),
+//    ]);
+//});
+//
+//Route::post('/login', function (Request  $request) {
+//    $credentials = request()->only(['name', 'password']);
+//
+//    $token = auth()->attempt($credentials);
+//
+//    return $token;
+//});
+//
+//Route::middleware('auth:api')->get('/me', function() {
+//    return auth()->user();
+//});
 
-Route::post('/login', function (Request  $request) {
-    $credentials = request()->only(['name', 'password']);
+Route::group([
 
-    $token = auth()->attempt($credentials);
+    'middleware' => 'api',
+    'prefix' => 'auth'
 
-    return $token;
-});
+], function ($router) {
 
-Route::middleware('auth:api')->get('/me', function() {
-    return auth()->user();
+    Route::post('login', 'AuthController@login');
+    Route::post('logout', 'AuthController@logout');
+    Route::post('refresh', 'AuthController@refresh');
+    Route::post('me', 'AuthController@me');
+
 });
 
 Route::get('/create', [PosterController::class, 'create']);
