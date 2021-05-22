@@ -21,9 +21,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/create', [PosterController::class, 'create']);
 
-Route::get('/sortDate', [PosterController::class, 'sortByDate']);
+Route::get('/posters-sort-by-date', [PosterController::class, 'sortByDate']);
 
-Route::get('/sortPrice', [PosterController::class, 'sortByPrice']);
+Route::get('/posters-sort-by-price', [PosterController::class, 'sortByPrice']);
 
 Route::get('/posters-by-category/{id}', [PosterController::class, 'filterByCategories']);
 

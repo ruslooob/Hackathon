@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Components\ImportDataClient;
+use App\Models\Category;
 use Illuminate\Console\Command;
 
 class ImportCategoriesCommand extends Command
@@ -39,7 +40,14 @@ class ImportCategoriesCommand extends Command
     public function handle()
     {
         $import = new ImportDataClient();
-        $response = $import->client->request('GET', 'categories');
-        dd(json_decode($response->getBody()->getContents()));
+        $categories = $import->client->request('GET', 'categories');
+        $categories = json_decode($categories->getBody()->getContents());
+
+        foreach ($categories as $category) {
+            $category = (array)$category;
+            if (!Category::find($category['id'])) {
+                Category::create($category);
+            }
+        }
     }
 }
