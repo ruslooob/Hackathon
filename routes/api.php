@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\DataController;
 use App\Http\Controllers\PosterController;
+use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -41,18 +43,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return auth()->user();
 //});
 
-Route::group([
+Route::post('register', [UserController::class, 'register']);
+Route::post('login', [UserController::class, 'authenticate']);
+Route::get('open', [DataController::class. 'open']);
 
-    'middleware' => 'api',
-    'prefix' => 'auth'
-
-], function ($router) {
-
-    Route::post('login', 'AuthController@login');
-    Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
-    Route::post('me', 'AuthController@me');
-
+Route::group(['middleware' => ['jwt.verify']], function() {
+    Route::get('user', [UserController::class, 'getAuthenticatedUser']);
+    Route::get('closed', [DataController::class, 'closed']);
 });
 
 Route::get('/create', [PosterController::class, 'create']);
