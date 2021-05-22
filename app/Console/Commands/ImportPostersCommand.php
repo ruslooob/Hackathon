@@ -3,7 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Components\ImportDataClient;
+use App\Models\Poster;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 
 class ImportPostersCommand extends Command
@@ -40,7 +42,25 @@ class ImportPostersCommand extends Command
     public function handle()
     {
         $import = new ImportDataClient();
-        $response = $import->client->request('GET', 'posters');
-        dd($response->getBody()->getContents());
+
+        $posters = $import->client->request('GET', 'posters');
+        $posters = json_decode($posters->getBody()->getContents())->results;
+
+
+        foreach ($posters as $poster) {
+            $poster = (array)($poster);
+            $categoryId = $poster['categories']->id;
+            $posterId = $poster['id'];
+
+            if (!Poster::find($poster['id'])) {
+                $poster['date'] = $poster['date']->lower;
+
+                $poster = Poster::create($poster);
+                DB::table('category_poster')->insert(
+                    ['category_id' => $categoryId, 'poster_id' => $posterId],
+                );
+            }
+        }
+        return "Мероприятия обновлены";
     }
 }

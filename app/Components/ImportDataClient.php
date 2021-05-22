@@ -20,7 +20,7 @@ class ImportDataClient
             // Base URI is used with relative requests
             'base_uri' => 'https://back-poster.admlr.lipetsk.ru/api/',
             // You can set any number of default request options.
-            'timeout'  => 3.0,
+            'timeout'  => 5.0,
             'verify' => false,
         ]);
     }
