@@ -59,12 +59,6 @@ class PosterController extends Controller
 
     public function filterByCategories($id): JsonResponse
     {
-//        $postersID = DB::table('category_poster')->where('category_id', $id)->get();
-//
-//        $posters = [];
-//        foreach ($postersID as $posterID) {
-//            array_push($posters, DB::table('posters')->find($posterID->poster_id));
-//        }
         $import = new ImportDataClient();
 
         $posters = $import->client->request('GET', 'posters-by-category/' . $id);
