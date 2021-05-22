@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\PosterController;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Hash;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +19,26 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+// user root
+Route::get('/user-create', function (Request $request) {
+    User::create([
+        'name' => 'Дмитрий',
+        'password' => Hash::make('password'),
+    ]);
+});
+
+Route::post('/login', function (Request  $request) {
+    $credentials = request()->only(['name', 'password']);
+
+    $token = auth()->attempt($credentials);
+
+    return $token;
+});
+
+Route::middleware('auth:api')->get('/me', function() {
+    return auth()->user();
 });
 
 Route::get('/create', [PosterController::class, 'create']);
