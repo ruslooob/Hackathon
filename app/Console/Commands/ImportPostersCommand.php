@@ -43,16 +43,30 @@ class ImportPostersCommand extends Command
     {
         $import = new ImportDataClient();
         $posters = $import->client->request('GET', 'posters');
-        $posters = json_decode($posters->getBody()->getContents())->results;
 
+        $posters_array = json_decode($posters->getBody()->getContents());
+        $next = $posters_array->next;
+        $data = $posters_array->results;
+        $results = $data;
+        $i = 2;
+        while ($next) {
+            $posters = $import->client->request('GET', 'posters/?page=' . $i);
+            $posters_array = json_decode($posters->getBody()->getContents());
+            $next = $posters_array->next;
+            $data = $posters_array->results;
+            $results = array_merge($results, $data);
+            $i++;
+        }
 
-        foreach ($posters as $poster) {
+        foreach ($results as $poster) {
             $poster = (array)($poster);
             $categoryId = $poster['categories']->id;
             $posterId = $poster['id'];
 
             if (!Poster::find($poster['id'])) {
-                $poster['date'] = $poster['date']->lower;
+                if ($poster['date']) {
+                    $poster['date'] = $poster['date']->lower;
+                }
 
                 $poster = Poster::create($poster);
                 DB::table('category_poster')->insert(
