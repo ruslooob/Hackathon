@@ -62,13 +62,14 @@ class PosterController extends Controller
         return Response()->json($posters);
     }
 
-    public function showPoster($id) : JsonResponse
+    public function showPoster($id): JsonResponse
     {
         $poster = Poster::find($id);
         return Response()->json($poster);
     }
 
-    public function filterByCategories($id) {
+    public function filterByCategories($id)
+    {
 //        $postersID = DB::table('category_poster')->where('category_id', $id)->get();
 //
 //        $posters = [];
@@ -77,7 +78,7 @@ class PosterController extends Controller
 //        }
         $import = new ImportDataClient();
 
-        $posters = $import->client->request('GET', 'posters-by-category/'.$id);
+        $posters = $import->client->request('GET', 'posters-by-category/' . $id);
         $posters = json_decode($posters->getBody()->getContents());
         return Response()->json($posters);
     }
@@ -86,7 +87,29 @@ class PosterController extends Controller
     {
         $import = new ImportDataClient();
         $posters = $import->client->request('GET', 'posters/');
-        $posters = json_decode($posters->getBody()->getContents());
-        return Response()->json($posters);
+        $posters_array = json_decode($posters->getBody()->getContents());
+        $next = $posters_array->next;
+        $data = $posters_array->results;
+        $results = $data;
+        $i = 2;
+        while ($next) {
+            $posters = $import->client->request('GET', 'posters/?page=' . $i);
+            $posters_array = json_decode($posters->getBody()->getContents());
+            $next = $posters_array->next;
+            $data = $posters_array->results;
+            $results = array_merge($results, $data);
+            $i++;
+        }
+
+//        $posters3 = $import->client->request('GET', 'posters/?page=3');
+//        $posters4 = $import->client->request('GET', 'posters/?page=4');
+//        $posters5 = $import->client->request('GET', 'posters/?page=5');
+//        $posters = json_decode($posters->getBody()->getContents())->results;
+//        $posters2 = json_decode($posters2->getBody()->getContents())->results;
+//        $posters3 = json_decode($posters3->getBody()->getContents())->results;
+//        $posters4 = json_decode($posters4->getBody()->getContents())->results;
+//        $posters5 = json_decode($posters5->getBody()->getContents())->results;
+//        $results = array_merge($posters, $posters2, $posters3, $posters4, $posters5);
+        return Response()->json($results);
     }
 }
