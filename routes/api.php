@@ -54,6 +54,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
 Route::get('/create', [PosterController::class, 'create']);
 
+
 Route::get('/posters-sort-by-date', [PosterController::class, 'sortByDate']);
 
 Route::get('/posters-sort-by-price', [PosterController::class, 'sortByPrice']);
