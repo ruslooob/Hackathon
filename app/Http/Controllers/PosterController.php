@@ -92,9 +92,24 @@ class PosterController extends Controller
 //        }
         $import = new ImportDataClient();
 
+//        $posters = $import->client->request('GET', 'posters-by-category/' . $id);
+//        $posters = json_decode($posters->getBody()->getContents());
+
         $posters = $import->client->request('GET', 'posters-by-category/' . $id);
-        $posters = json_decode($posters->getBody()->getContents());
-        return Response()->json($posters);
+        $posters_array = json_decode($posters->getBody()->getContents());
+        $next = $posters_array->next;
+        $data = $posters_array->results;
+        $results = $data;
+        $i = 2;
+        while ($next) {
+            $posters = $import->client->request('GET', 'posters-by-category/' . $id.'/?page='. $i);
+            $posters_array = json_decode($posters->getBody()->getContents());
+            $next = $posters_array->next;
+            $data = $posters_array->results;
+            $results = array_merge($results, $data);
+            $i++;
+        }
+        return Response()->json($results);
     }
 
     public function indexPoster()
@@ -115,6 +130,7 @@ class PosterController extends Controller
             $i++;
         }
 
+        dd($results);
         return Response()->json($results);
     }
 }
