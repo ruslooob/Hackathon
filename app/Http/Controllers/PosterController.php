@@ -130,7 +130,6 @@ class PosterController extends Controller
             $i++;
         }
 
-        dd($results);
         return Response()->json($results);
     }
 }
